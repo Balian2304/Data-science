@@ -38,3 +38,29 @@ print(newdata.head())
 print(newdata.tail())
 print(newdata.shape)
 print(newdata.dtypes)
+
+
+print(data[data["Age"]<18])
+
+print(data[(data["Sex"]=="male")&(data["Age"]>20)][["Name","Age"]])
+print(data[(data["Survived"]==0)&(data["Age"]<30)][["Name","Age"]])
+print(data[(data["Pclass"]==3)&(data["Age"]<30)][["Name","Age"]])
+print(data.loc[data["Age"]>18,"Name"])
+print(data.iloc[1:100:5,2:8:2])
+data["discount"] = data["Fare"] * 0.1
+print(data["discount"])
+data.iloc[1:4:1,2] = "John"
+print(data["Name"])
+data.to_csv("Lesson2file.csv")
+data_rename = data.rename(columns={"Fare":"Price","Sex":"Gender"})
+data_rename.info()
+print(data["Age"].mean())
+print(data[["Fare","Age"]].mean())
+print(data.agg({"Age":["sum","mean","median"],"Fare":["min","max","mean"]}))
+print(data["Sex"].value_counts())
+#groupby
+print(data.groupby("Survived")["Fare"].count())
+print(data.groupby("Survived")["Fare"].mean())
+print(data.groupby("Sex")["Fare"].max())
+
+
