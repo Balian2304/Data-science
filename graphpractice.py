@@ -37,3 +37,5 @@ mp.bar(result.index,result.values)
 mp.show()
 
 #Create a bar chart showing the survival rate by gender
+#Create a scatter plot of Age vs Fare, using different colors for survivors and non-survivors.
+#Create a box plot showing Fare distribution by Pclass and Survival status
