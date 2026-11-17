@@ -19,8 +19,30 @@ bargraph.write_html("covid_data.html",auto_open=True)
 mostrecovered = pd.DataFrame(data.groupby("Country_Region")["Recovered"].sum().nlargest(10).sort_values(ascending=False))
 bargraph = pe.bar(mostrecovered,x=mostrecovered.index,y="Recovered",height=600,color="Recovered",color_continuous_scale=pe.colors.sequential.Bluyl_r)
 bargraph.write_html("covid_data.html",auto_open=True)
-"""
-top5highestdeaths_us = pd.DataFrame(data[data["Country_Region"] == "US"].groupby("Province_State")["Deaths"].sum().nlargest(5).sort_values(ascending=False))
+
+top5highestdeaths_us = pd.DataFrame(data.groupby("Country_Region").get_group("US").nlargest(5,"Deaths").sort_values(by="Deaths",ascending=False))
 bargraph = pe.bar(top5highestdeaths_us,x=top5highestdeaths_us.index,y="Deaths")
 bargraph.write_html("covid_data.html",auto_open=True)
 
+figure = go.Figure(
+    data=[
+        go.Bar(name="Deaths",x=top5highestdeaths_us.index,y=top5highestdeaths_us["Deaths"]),
+        go.Bar(name="Confirmed",x=top5highestdeaths_us.index,y=top5highestdeaths_us["Confirmed"]),
+        go.Bar(name="Recovered",x=top5highestdeaths_us.index,y=top5highestdeaths_us["Recovered"])
+    ]
+)
+figure.write_html("figure.html",auto_open=True)
+
+"""
+print(pd.DataFrame(data.groupby("Country_Region").get_group("US").nlargest(5,"Deaths").sort_values(by="Deaths",ascending=False)))
+#print(data[data["Province_State"]=="US"])
+usdata = data["Country_Region"]=="Brazil"
+highestdeaths = data[usdata].nlargest(5,"Deaths")
+figure = go.Figure(
+    data=[
+        go.Bar(name="Deaths",x=highestdeaths.index,y=highestdeaths["Deaths"]),
+        go.Bar(name="Confirmed",x=highestdeaths.index,y=highestdeaths["Confirmed"]),
+        go.Bar(name="Recovered",x=highestdeaths.index,y=highestdeaths["Recovered"])
+    ]
+)
+figure.write_html("figure.html",auto_open=True)
